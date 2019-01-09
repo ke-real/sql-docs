@@ -512,7 +512,7 @@ GO
     SELECT i.name   
     FROM sys.indexes i   
     JOIN sys.tables t  
-    ON ( i.type_desc = 'CLUSTERED' ) WHERE t.name = 'MyFactTable';  
+    ON ( i.type_desc = 'CLUSTERED' ) AND i.object_id = t.object_id WHERE t.name = 'MyFactTable';  
   
     --Drop the clustered rowstore index.  
     DROP INDEX ClusteredIndex_d473567f7ea04d7aafcac5364c241e09 ON MyDimTable;  
@@ -530,7 +530,7 @@ GO
     SELECT i.name   
     FROM sys.indexes i  
     JOIN sys.tables t   
-    ON ( i.type_desc = 'CLUSTERED' )  
+    ON ( i.type_desc = 'CLUSTERED' )  AND i.object_id = t.object_id  
     WHERE t.name = 'MyFactTable';  
   
     --Second, create the clustered columnstore index and   
@@ -573,7 +573,7 @@ ON MyFactTable;
 SELECT i.object_id, i.name, t.object_id, t.name   
 FROM sys.indexes i   
 JOIN sys.tables t  
-ON (i.type_desc = 'CLUSTERED COLUMNSTORE')  
+ON (i.type_desc = 'CLUSTERED COLUMNSTORE')  AND i.object_id = t.object_id  
 WHERE t.name = 'RowstoreDimTable';  
   
 --Rebuild the entire index by using CREATE CLUSTERED INDEX.  
